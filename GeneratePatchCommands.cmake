@@ -70,7 +70,7 @@ function(generate_patch_commands out_var)
     endif()
 
     foreach(globbing_expr ${ARG_PATCHES})
-        file(GLOB files LIST_DIRECTORIES false ${globbing_expr})
+        file(GLOB files LIST_DIRECTORIES false CONFIGURE_DEPENDS ${globbing_expr})
         list(SORT files)
         foreach(file ${files})
             if(ARG_USE_GIT_AM)
