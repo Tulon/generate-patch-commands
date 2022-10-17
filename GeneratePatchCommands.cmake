@@ -60,12 +60,10 @@ function(generate_patch_commands out_var)
     set(commands "")
 
     if(ARG_USE_GIT_AM)
-        # Set "user.name" and "user.email" for this repository only, so that git
-        # doesn't complain if they are not set at all.
         list(
             APPEND commands
-            COMMAND ${GIT_EXECUTABLE} config user.name "Auto Patcher"
-            COMMAND ${GIT_EXECUTABLE} config user.email "auto.patcher@no-such-domain"
+            COMMAND ${CMAKE_COMMAND} "-DGIT_EXECUTABLE=${GIT_EXECUTABLE}"
+                -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/impl/set_git_user_if_unset.cmake"
         )
     endif()
 
