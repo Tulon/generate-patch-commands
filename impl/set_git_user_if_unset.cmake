@@ -30,6 +30,13 @@ if(NOT (user_name_res EQUAL 0 AND user_email_res EQUAL 0))
     # Set a fake git user for the local repository, just to make applying patches possible.
     execute_process(
         COMMAND ${GIT_EXECUTABLE} config user.name "Auto Patcher"
+        COMMAND_ERROR_IS_FATAL ANY
+    )
+
+    # Note that having a single execute_process() call with multiple COMMANDs
+    # doesn't guarantee sequential execution of commands. Therefore, we use
+    # separate execute_process() calls.
+    execute_process(
         COMMAND ${GIT_EXECUTABLE} config user.email "auto.patcher@no-such-domain"
         COMMAND_ERROR_IS_FATAL ANY
     )
